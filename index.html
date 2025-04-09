@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro e Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #2135A6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .formulario {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #2135A6;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .erro {
+            color: red;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #2135A6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1a2c85;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Formulário de Cadastro -->
+        <form id="registroForm" class="formulario">
+            <h1>Cadastro de Usuário</h1>
+
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" required>
+            <span class="erro" id="erro-email"></span>
+
+            <label for="idade">Data de Nascimento:</label>
+            <input type="date" id="idade" required>
+            <span class="erro" id="erro-idade"></span>
+
+            <label for="usuario">ID do Usuário:</label>
+            <input type="text" id="usuario" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" required>
+
+            <button type="button" id="salvar">Salvar</button>
+        </form>
+
+        <!-- Formulário de Login -->
+        <form id="loginForm" class="formulario">
+            <h1>Login</h1>
+
+            <label for="loginUsuario">ID do Usuário:</label>
+            <input type="text" id="loginUsuario" required>
+
+            <label for="loginSenha">Senha:</label>
+            <input type="password" id="loginSenha" required>
+
+            <button type="button" id="entrar">Entrar</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('salvar').addEventListener('click', function () {
+            let nome = document.getElementById('nome').value;
+            let email = document.getElementById('email').value;
+            let idade = document.getElementById('idade').value;
+            let usuario = document.getElementById('usuario').value;
+            let senha = document.getElementById('senha').value;
+
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            let erroEmail = document.getElementById('erro-email');
+            let erroIdade = document.getElementById('erro-idade');
+            erroEmail.textContent = '';
+            erroIdade.textContent = '';
+
+            if (!emailRegex.test(email)) {
+                erroEmail.textContent = 'E-mail inválido';
+                return;
+            }
+
+            if (!idade) {
+                erroIdade.textContent = 'Data de nascimento obrigatória';
+                return;
+            }
+
+            let usuarioData = { nome, email, idade, usuario, senha };
+            localStorage.setItem('usuarioData', JSON.stringify(usuarioData));
+            alert('Cadastro realizado com sucesso!');
+        });
+
+        document.getElementById('entrar').addEventListener('click', function () {
+            let loginUsuario = document.getElementById('loginUsuario').value;
+            let loginSenha = document.getElementById('loginSenha').value;
+
+            let usuarioData = JSON.parse(localStorage.getItem('usuarioData'));
+
+            if (usuarioData && usuarioData.usuario === loginUsuario && usuarioData.senha === loginSenha) {
+                // Redireciona para o formulário de inscrição
+                window.location.href = "formulario.html";
+            } else {
+                alert('ID de usuário ou senha incorretos.');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

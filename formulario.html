@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Inscrição</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background: url('Cor.png') no-repeat center center/cover;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .formulario {
+            flex: 1;
+            padding: 30px;
+        }
+
+        h1, h2 {
+            color: #2135A6;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .erro {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .trilhas {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .trilha-btn {
+            padding: 12px;
+            border: 2px solid #2135A6;
+            border-radius: 5px;
+            background: white;
+            color: #2135A6;
+            text-align: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .trilha-btn:hover,
+        .trilha-btn.active {
+            background: #2135A6;
+            color: white;
+        }
+
+        .botoes {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .ilustracao {
+            flex: 1.5;
+            background: #2135A6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ilustracao img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f8f8;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        footer img {
+            width: 150px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <section class="formulario">
+            <h1>Formulário de Inscrição</h1>
+            <form onsubmit="return validarFormulario()">
+                <h2>Informações Pessoais</h2>
+                <label>Nome completo</label>
+                <input type="text" name="nome" required>
+
+                <label>Data de nascimento</label>
+                <input type="date" name="nascimento" required>
+
+                <label>CPF</label>
+                <input type="text" name="cpf" id="cpf" required oninput="validarCPF()">
+                <span class="erro" id="erro-cpf"></span>
+
+                <label>Sexo</label>
+                <select name="sexo">
+                    <option value="feminino">Feminino</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="outro">Outro</option>
+                </select>
+
+                <label>E-mail</label>
+                <input type="email" name="email" required>
+
+                <label>Telefone</label>
+                <input type="tel" name="telefone" required>
+
+                <h2>Endereço Residencial</h2>
+                <label>CEP</label>
+                <input type="text" name="cep" required>
+
+                <label>Rua</label>
+                <input type="text" name="rua" required>
+
+                <label>Número</label>
+                <input type="text" name="numero" required>
+
+                <label>Cidade</label>
+                <input type="text" name="cidade" required>
+
+                <label>Estado</label>
+                <input type="text" name="estado" required>
+
+                <h2>Trilhas de Aprendizagem</h2>
+                <label>Selecione uma trilha:</label>
+
+                <div class="trilhas">
+                    <div class="trilha-btn" onclick="selecionarTrilha('frontend')">Programação Front-end</div>
+                    <div class="trilha-btn" onclick="selecionarTrilha('backend')">Programação Back-end</div>
+                    <div class="trilha-btn" onclick="selecionarTrilha('jogos')">Programação de Jogos</div>
+                    <div class="trilha-btn" onclick="selecionarTrilha('design')">Design e Experiência</div>
+                    <div class="trilha-btn" onclick="selecionarTrilha('dados')">Ciência de Dados</div>
+                </div>
+
+                <input type="hidden" name="trilhaSelecionada" id="trilhaSelecionada" required>
+
+                <label>
+                    <input type="checkbox" name="termos" required>
+                    Declaro que li e concordo com os <a href="#">Termos e Condições</a> e com a <a href="#">Política de Privacidade</a>.
+                </label>
+
+                <div class="botoes">
+                    <input type="submit" value="Enviar" style="width: 200px; height: 50px; background: #2135A6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    <input type="reset" value="Cancelar" style="width: 200px; height: 50px; background: #ccc; color: black; border: none; border-radius: 5px; cursor: pointer;">
+                </div>
+            </form>
+        </section>
+
+        <section class="ilustracao">
+            <img src="images/capa.png" alt="Ilustração do programa Trilhas">
+        </section>
+    </div>
+
+    <footer>
+        <img src="images/logo.png" alt="Logo">
+    </footer>
+
+    <script>
+        function selecionarTrilha(trilha) {
+            document.querySelectorAll('.trilha-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            document.getElementById('trilhaSelecionada').value = trilha;
+        }
+
+        function validarCPF() {
+            const cpfInput = document.getElementById("cpf");
+            const erroCPF = document.getElementById("erro-cpf");
+            const cpf = cpfInput.value.replace(/\D/g, ""); // remove não-dígitos
+
+            if (cpf.length > 11) {
+                cpfInput.value = cpf.slice(0, 11); // limita a 11 dígitos
+            }
+
+            if (cpf.length < 11) {
+                erroCPF.textContent = "O CPF deve conter 11 dígitos.";
+            } else {
+                erroCPF.textContent = "";
+            }
+        }
+
+        function validarFormulario() {
+            const cpf = document.getElementById("cpf").value.replace(/\D/g, "");
+            const erroCPF = document.getElementById("erro-cpf");
+
+            if (cpf.length !== 11) {
+                erroCPF.textContent = "O CPF deve conter exatamente 11 dígitos.";
+                return false;
+            }
+
+            erroCPF.textContent = "";
+            alert("Inscrição feita com sucesso!");
+            return true;
+        }
+    </script>
+</body>
+</html>
